@@ -8,9 +8,7 @@ const port = process.env.PORT;
 
 
 app.use(express.json());
-app.use(cors({
-    origin: "https://veggie-recipe-vibes.vercel.app/"
-}));
+app.use(cors());
 
 async function main(){
     await mongoose.connect(process.env.CONNECTION_STRING);
