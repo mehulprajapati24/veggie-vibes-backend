@@ -2,17 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require('cors');
-const port = process.env.PORT || 5000;
+require('dotenv').config();
 
+const port = process.env.PORT;
 
-// mehulprajapati1661
-// rnSwXUL6Ybj8kCBN
 
 app.use(express.json());
 app.use(cors());
 
 async function main(){
-    await mongoose.connect("mongodb+srv://mehulprajapati1661:rnSwXUL6Ybj8kCBN@veggie-vibes-react-app.pyil4jp.mongodb.net/Veggie-Vibes-react-app?retryWrites=true&w=majority&appName=Veggie-Vibes-react-app");
+    await mongoose.connect(process.env.CONNECTION_STRING);
 
     app.get("/", (req, res)=>{
         res.send("Veggie-Vibes app server running...");
