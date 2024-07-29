@@ -47,10 +47,6 @@ const moreSchema = new Schema({
 });
 
 const ItemSchema = new Schema({
-    menuId: {
-        type: Number,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -77,7 +73,7 @@ const ItemSchema = new Schema({
         required: true
     },
     more: {
-        type: [moreSchema],
+        type: moreSchema,
         required: true
     }
 });

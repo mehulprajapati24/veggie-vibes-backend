@@ -8,4 +8,7 @@ router.get("/items", itemController.getSearchedItems);
 
 router.get("/items/:id", itemController.getSingleItem);
 
+router.get("/latest-items", itemController.getLatestItems);
+
+
 module.exports = router;

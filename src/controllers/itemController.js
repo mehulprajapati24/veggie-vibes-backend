@@ -5,6 +5,11 @@ const getAllItems = async (req, res) => {
     res.status(200).json(result);
 }
 
+const getLatestItems = async (req, res) => {
+    const result = await Item.find().sort({createAt: -1}).limit(4);
+    res.status(200).json(result);
+}
+
 const getSearchedItems = async (req, res) => {
     const {q} = req.query;
     try{
@@ -32,5 +37,6 @@ const getSingleItem = async (req, res) =>
 module.exports ={
     getAllItems,
     getSearchedItems,
-    getSingleItem
+    getSingleItem,
+    getLatestItems
 }
