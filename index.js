@@ -22,9 +22,11 @@ main().then(()=>{console.log("MongoDB connected successfully")}).catch(err => co
 
 const ItemRoutes = require("./src/routes/itemRoute");
 const CategoryRoutes = require('./src/routes/categoryRoute')
+const UserRoutes = require('./src/routes/userRoute')
 
 app.use('/api', ItemRoutes);
 app.use('/api', CategoryRoutes);
+app.use('/user', UserRoutes);
 
 app.listen(port, ()=>{
     console.log(`Veggie-Vibes app listening on port ${port}`);
