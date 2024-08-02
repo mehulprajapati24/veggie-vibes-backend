@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
 const crypto = require('crypto');
 
+require('dotenv').config();
+
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {

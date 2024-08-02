@@ -1,5 +1,6 @@
 const Item = require("../model/ItemModel")
 const Recipe = require("../model/RecipeModel")
+require('dotenv').config();
 
 const getAllItems = async (req, res) => {
     const result = await Recipe.find();

@@ -1,5 +1,6 @@
 const Item = require("../model/ItemModel");
 const Recipe = require("../model/RecipeModel");
+require('dotenv').config();
 
 const getCategory = async (req, res)=>{
     const {category} = req.params;
