@@ -13,5 +13,7 @@ router.get("/latest-items", itemController.getLatestItems);
 
 router.get("/your-items", authenticateToken, itemController.getYourItems);
 
+router.post("/comment", authenticateToken, itemController.addComment);
+
 
 module.exports = router;

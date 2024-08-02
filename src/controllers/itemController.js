@@ -34,17 +34,34 @@ const getSingleItem = async (req, res) =>
     {
         const {id} = req.params;
         try {
-            const item = await Item.findById(id);
+            const item = await Recipe.findById(id);
             res.json(item);
         }catch(error){
             res.status(500).json({message: "No item found!"});
         }
     }
 
+const addComment = async (req, res) => {
+    const username = req.user.username;
+    const {comment, itemId} = req.body;
+
+    const recipe = await Recipe.findById(itemId);
+
+    const newComment = {
+        username: username,
+        comment: comment
+    };
+
+    recipe.comments.push(newComment);
+    await recipe.save();
+    res.json({ success: true, comment: newComment });
+}
+
 module.exports ={
     getAllItems,
     getSearchedItems,
     getSingleItem,
     getLatestItems,
-    getYourItems
+    getYourItems,
+    addComment
 }
