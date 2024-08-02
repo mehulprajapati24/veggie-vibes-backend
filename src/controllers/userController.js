@@ -1,5 +1,6 @@
 const User = require("../model/UserModel")
 const Otp = require("../model/OtpModel")
+const Recipe = require('../model/RecipeModel');
 const bcrypt = require("bcrypt")
 const {authenticateToken} = require('../../utilities')
 const jwt = require('jsonwebtoken')
@@ -101,6 +102,14 @@ const createUser = async (req, res) => {
      });
 }
 
+
+const getDashboard = async (req, res) => {
+    res.json({ 
+        error: false,
+        user: req.user,
+        upload_care_key: process.env.UPLOAD_CARE_PUBLIC_KEY
+     })
+}
 
 
 const validateUser = async (req, res) => {
@@ -205,11 +214,33 @@ const changePassword = async (req, res)=>{
         }
 }
 
+const createRecipe = async (req, res)=>{
+    const { recipeName, image, category, instructions, ingredients, preparationTime, cookTime, difficulty, aboutDish } = req.body;
+    const user = req.user;
+    
+    const newRecipe = new Recipe({
+        recipeName,
+        image,
+        category,
+        instructions,
+        ingredients,
+        preparationTime,
+        cookTime,
+        difficulty,
+        aboutDish,
+        user: user.userId
+      });
+      await newRecipe.save();
+      res.status(201).json({ message: 'Recipe created successfully'});
+}
+
 module.exports = {
     createUser,
     createUserOtp,
     validateUser,
     forgotPasswordGenerateOtp,
     validateOtpLogin,
-    changePassword
+    changePassword,
+    getDashboard,
+    createRecipe
 }

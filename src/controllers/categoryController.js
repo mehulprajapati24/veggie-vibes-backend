@@ -1,9 +1,10 @@
 const Item = require("../model/ItemModel");
+const Recipe = require("../model/RecipeModel");
 
 const getCategory = async (req, res)=>{
     const {category} = req.params;
     try {
-        const items = await Item.find({category: { $regex: `^${category}$`, $options: 'i'}});
+        const items = await Recipe.find({category: { $regex: `^${category}$`, $options: 'i'}});
         if(!items){
             return res.status(404).json({message: "Category not found!"});
         }

@@ -1,12 +1,19 @@
 const Item = require("../model/ItemModel")
+const Recipe = require("../model/RecipeModel")
 
 const getAllItems = async (req, res) => {
-    const result = await Item.find().sort({createAt: -1});
+    const result = await Recipe.find();
     res.status(200).json(result);
 }
 
+const getYourItems = async (req, res) => {
+    const user_id = req.user.userId;
+    const recipes = await Recipe.find({user: user_id});
+    res.status(200).json(recipes);
+}
+
 const getLatestItems = async (req, res) => {
-    const result = await Item.find().sort({createAt: -1}).limit(4);
+    const result = await Recipe.find().limit(4);
     res.status(200).json(result);
 }
 
@@ -15,7 +22,7 @@ const getSearchedItems = async (req, res) => {
     try{
         let items;
         if(q){
-            items = await Item.find({name: {$regex: q, $options: 'i'}})
+            items = await Recipe.find({recipeName: {$regex: q, $options: 'i'}})
         }
         res.status(200).json(items);
     }catch(error){
@@ -38,5 +45,6 @@ module.exports ={
     getAllItems,
     getSearchedItems,
     getSingleItem,
-    getLatestItems
+    getLatestItems,
+    getYourItems
 }
