@@ -3,18 +3,18 @@ const Recipe = require("../model/RecipeModel")
 require('dotenv').config();
 
 const getAllItems = async (req, res) => {
-    const result = await Recipe.find();
+    const result = await Recipe.find().sort({ createdAt: -1 });
     res.status(200).json(result);
 }
 
 const getYourItems = async (req, res) => {
     const user_id = req.user.userId;
-    const recipes = await Recipe.find({user: user_id});
+    const recipes = await Recipe.find({user: user_id}).sort({ createdAt: -1 });
     res.status(200).json(recipes);
 }
 
 const getLatestItems = async (req, res) => {
-    const result = await Recipe.find().limit(4);
+    const result = await Recipe.find().sort({ createdAt: -1 }).limit(4);
     res.status(200).json(result);
 }
 
@@ -23,7 +23,7 @@ const getSearchedItems = async (req, res) => {
     try{
         let items;
         if(q){
-            items = await Recipe.find({recipeName: {$regex: q, $options: 'i'}})
+            items = await Recipe.find({recipeName: {$regex: q, $options: 'i'}}).sort({ createdAt: -1 });
         }
         res.status(200).json(items);
     }catch(error){

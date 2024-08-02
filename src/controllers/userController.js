@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 
 const createUserOtp = async (req, res) => {
     const { username, email, password } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     const user = await User.findOne({ username: username });
     if (user) {
         return res.json({ error: true, message: "Username is already occupied" });
@@ -109,7 +109,8 @@ const getDashboard = async (req, res) => {
     res.json({ 
         error: false,
         user: req.user,
-        upload_care_key: process.env.UPLOAD_CARE_PUBLIC_KEY
+        upload_care_key: process.env.UPLOAD_CARE_PUBLIC_KEY,
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME
      })
 }
 
@@ -217,12 +218,13 @@ const changePassword = async (req, res)=>{
 }
 
 const createRecipe = async (req, res)=>{
-    const { recipeName, image, category, instructions, ingredients, preparationTime, cookTime, difficulty, aboutDish } = req.body;
+    const { recipeName, image, video, category, instructions, ingredients, preparationTime, cookTime, difficulty, aboutDish } = req.body;
     const user = req.user;
     
     const newRecipe = new Recipe({
         recipeName,
         image,
+        video,
         category,
         instructions,
         ingredients,
@@ -236,6 +238,10 @@ const createRecipe = async (req, res)=>{
       res.status(201).json({ message: 'Recipe created successfully'});
 }
 
+const getKey = async (req, res)=>{
+    res.json({key: process.env.ACCESS_KEY});
+}
+
 module.exports = {
     createUser,
     createUserOtp,
@@ -244,5 +250,6 @@ module.exports = {
     validateOtpLogin,
     changePassword,
     getDashboard,
-    createRecipe
+    createRecipe,
+    getKey
 }

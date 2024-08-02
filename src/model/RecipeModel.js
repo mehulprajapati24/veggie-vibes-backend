@@ -10,6 +10,10 @@ const RecipeSchema = new Schema({
     type: String,
     required: true
   },
+  video: {
+    type: String,
+    required: true
+  },
   category: {
     type: String,
     required: true
@@ -53,6 +57,8 @@ const RecipeSchema = new Schema({
       required: true
     }
   }]
+}, {
+  timestamps: true // Adds createdAt and updatedAt fields
 });
 
 const Recipe = mongoose.model('Recipe', RecipeSchema);

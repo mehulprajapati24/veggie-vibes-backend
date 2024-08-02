@@ -8,7 +8,7 @@ const port = process.env.PORT;
 
 
 app.use(express.json());
-// Configure CORS
+//Configure CORS
 const corsOptions = {
     origin: 'https://veggie-recipe-vibes.vercel.app', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
@@ -17,6 +17,9 @@ const corsOptions = {
 
 // Use CORS middleware with options
 app.use(cors(corsOptions));
+
+//for localhost
+//app.use(cors());
 
 async function main(){
     await mongoose.connect(process.env.CONNECTION_STRING);
