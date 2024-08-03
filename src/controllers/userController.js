@@ -114,6 +114,15 @@ const getDashboard = async (req, res) => {
      })
 }
 
+const isLocked = async (req, res) => {
+    const {id} = req.body;
+    const user = await User.findById(id);
+    if (user.isLocked) {
+        return res.json({ locked: true, message: "Your account is locked" });
+        }
+        return res.json({ locked: false, message: "Your account is unlocked" });
+}
+
 
 const validateUser = async (req, res) => {
     const { username, password } = req.body;
@@ -220,7 +229,8 @@ const changePassword = async (req, res)=>{
 const createRecipe = async (req, res)=>{
     const { recipeName, image, video, category, instructions, ingredients, preparationTime, cookTime, difficulty, aboutDish } = req.body;
     const user = req.user;
-    
+    // console.log(user);
+    // console.log(user.adminId);
     const newRecipe = new Recipe({
         recipeName,
         image,
@@ -232,8 +242,9 @@ const createRecipe = async (req, res)=>{
         cookTime,
         difficulty,
         aboutDish,
-        user: user.userId
+        user: user.userId || user.adminId
       });
+    //   console.log("done");
       await newRecipe.save();
       res.status(201).json({ message: 'Recipe created successfully'});
 }
@@ -251,5 +262,6 @@ module.exports = {
     changePassword,
     getDashboard,
     createRecipe,
-    getKey
+    getKey,
+    isLocked
 }

@@ -13,5 +13,6 @@ router.post("/change-password", userController.changePassword);
 router.get("/dashboard", authenticateToken, userController.getDashboard);
 router.post("/create-recipe", authenticateToken, userController.createRecipe);
 router.get("/getkey", userController.getKey);
+router.post("/islocked", userController.isLocked);
 
 module.exports = router;

@@ -58,11 +58,47 @@ const addComment = async (req, res) => {
     res.json({ success: true, comment: newComment });
 }
 
+const deleteItem = async (req, res) => {
+    const {id} = req.params;
+    const user = req.user;
+
+    const recipe = await Recipe.findById(id);
+
+    if (recipe.user.toString() !== user.userId) {
+        return res.status(403).json({ error: 'You are not authorized to delete this recipe' });
+    }
+
+    await Recipe.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Recipe deleted successfully' });
+}
+
+const updateItem = async (req, res) => {
+    const { id } = req.params;
+    const user = req.user;
+    const updatedData = req.body;
+
+  try {
+    const recipe = await Recipe.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (recipe.user.toString() !== user.userId) {
+        return res.status(403).json({ error: 'You are not authorized to delete this recipe' });
+    }
+
+    res.status(200).json({ message: "Recipe updated successfully", recipe });
+  } catch (error) {
+    console.error("Error updating recipe:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+
+}
+
 module.exports ={
     getAllItems,
     getSearchedItems,
     getSingleItem,
     getLatestItems,
     getYourItems,
-    addComment
+    addComment,
+    deleteItem,
+    updateItem
 }

@@ -13,7 +13,11 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-        }
+        },
+    isLocked: {
+        type: Boolean,
+        default: false // Default to unlocked
+    }
 });
 
 const User = mongoose.model('User', UserSchema);
